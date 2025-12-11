@@ -1,0 +1,250 @@
+[2025-12-11 19:06:08] [INFO] [APP] File logging enabled: logs/bot.log
+[2025-12-11 19:06:08] [INFO] [APP] =========== Starting telegram assistant ===========
+[2025-12-11 19:06:08] [INFO] [APP] .env file successfully loaded
+[2025-12-11 19:06:08] [INFO] [APP] Environment variables loaded
+[2025-12-11 19:06:08] [INFO] [TELEGRAM] Bot authorized as @urban_assist_bot
+[2025-12-11 19:06:08] [INFO] [APP] Telegram update channel initialized
+[2025-12-11 19:06:08] [INFO] [APP] Connecting to PostgreSQL...
+[2025-12-11 19:06:08] [INFO] [APP] DB pool size set to 10
+[2025-12-11 19:06:08] [INFO] [APP] PostgreSQL connection established successfully
+[2025-12-11 19:06:08] [INFO] [APP] Database connected successfully
+[2025-12-11 19:06:08] [DEBUG] [SQL] CREATE TABLE IF NOT EXISTS users (
+			id SERIAL PRIMARY KEY,
+			telegram_user_id BIGINT NOT NULL UNIQUE,
+			chat_id BIGINT NOT NULL,
+			last_message TEXT,
+			time_last_message TIMESTAMPTZ,
+			created_at TIMESTAMPTZ DEFAULT NOW()
+		);
+[2025-12-11 19:06:08] [DEBUG] [SQL] CREATE TABLE IF NOT EXISTS todos (
+			id SERIAL PRIMARY KEY,
+			user_id BIGINT NOT NULL,
+			title TEXT NOT NULL,
+			description TEXT,
+			place TEXT,
+			datetime TIMESTAMPTZ NOT NULL,
+			remind_before INT DEFAULT 0,
+			notified BOOLEAN DEFAULT FALSE,
+			is_completed BOOLEAN DEFAULT FALSE,
+			participants TEXT[],
+			created_at TIMESTAMPTZ DEFAULT NOW(),
+			updated_at TIMESTAMPTZ DEFAULT NOW(),
+			archived_at TIMESTAMPTZ
+		);
+[2025-12-11 19:06:08] [DEBUG] [SQL] CREATE TABLE IF NOT EXISTS user_state (
+			user_id BIGINT PRIMARY KEY,
+			module TEXT NOT NULL,
+			step TEXT NOT NULL,
+			draft JSONB DEFAULT '{}'::jsonb,
+			updated_at TIMESTAMPTZ DEFAULT NOW()
+		);
+[2025-12-11 19:06:08] [INFO] [APP] All migrations applied successfully
+[2025-12-11 19:06:08] [INFO] [APP] Migrations applied successfully
+[2025-12-11 19:06:08] [INFO] [APP] Bot is now waiting for updates...
+[2025-12-11 19:06:19] [INFO] [TELEGRAM] Message from @ezhigval: /start
+[2025-12-11 19:06:19] [DEBUG] [SQL] UPSERT user telegram_id=1034074077
+[2025-12-11 19:06:19] [INFO] [BOT] Command /start
+[2025-12-11 19:06:23] [INFO] [TELEGRAM] Message from @ezhigval: /todo
+[2025-12-11 19:06:23] [DEBUG] [SQL] UPSERT user telegram_id=1034074077
+[2025-12-11 19:06:23] [INFO] [BOT] Command /todo
+[2025-12-11 19:06:33] [INFO] [TELEGRAM] Message from @ezhigval: Список дел
+[2025-12-11 19:06:33] [DEBUG] [SQL] UPSERT user telegram_id=1034074077
+[2025-12-11 19:06:33] [DEBUG] [STATE] Loading user state → user=1034074077
+[2025-12-11 19:06:33] [DEBUG] [STATE] Current state: module=todo step=delete_id
+[2025-12-11 19:06:33] [DEBUG] [SQL] SELECT todo list WHERE user_id=1034074077
+[2025-12-11 19:06:33] [DEBUG] [SQL] SELECT todos WHERE user=1034074077
+[2025-12-11 19:06:33] [INFO] [TODO] Returned 1 todos to user=1034074077
+[2025-12-11 19:06:37] [INFO] [TELEGRAM] Message from @ezhigval: Удалить событие
+[2025-12-11 19:06:37] [DEBUG] [SQL] UPSERT user telegram_id=1034074077
+[2025-12-11 19:06:37] [DEBUG] [STATE] Loading user state → user=1034074077
+[2025-12-11 19:06:37] [DEBUG] [STATE] Current state: module=todo step=delete_id
+[2025-12-11 19:06:37] [DEBUG] [STATE] Saving user state → user=1034074077
+[2025-12-11 19:06:37] [INFO] [TODO] User started TODO deletion
+[2025-12-11 19:06:39] [INFO] [TELEGRAM] Message from @ezhigval: 2
+[2025-12-11 19:06:39] [DEBUG] [SQL] UPSERT user telegram_id=1034074077
+[2025-12-11 19:06:39] [DEBUG] [STATE] Loading user state → user=1034074077
+[2025-12-11 19:06:39] [DEBUG] [STATE] Current state: module=todo step=delete_id
+[2025-12-11 19:06:39] [INFO] [TODO] FSM todo:delete_id — 2
+[2025-12-11 19:06:39] [DEBUG] [SQL] ARCHIVE todo id=2
+[2025-12-11 19:06:39] [DEBUG] [SQL] ARCHIVE todo id=2 user=1034074077
+[2025-12-11 19:06:39] [DEBUG] [STATE] Saving user state → user=1034074077
+[2025-12-11 19:06:41] [INFO] [TELEGRAM] Message from @ezhigval: Список дел
+[2025-12-11 19:06:41] [DEBUG] [SQL] UPSERT user telegram_id=1034074077
+[2025-12-11 19:06:41] [DEBUG] [STATE] Loading user state → user=1034074077
+[2025-12-11 19:06:41] [DEBUG] [STATE] Current state: module=idle step=idle
+[2025-12-11 19:06:41] [DEBUG] [SQL] SELECT todo list WHERE user_id=1034074077
+[2025-12-11 19:06:41] [DEBUG] [SQL] SELECT todos WHERE user=1034074077
+[2025-12-11 22:18:37] [INFO] =========== Starting telegram assistant ===========
+[2025-12-11 22:18:37] [INFO] .env loaded successfully
+[2025-12-11 22:18:38] [INFO] Bot authorized as: urban_assist_bot
+[2025-12-11 22:18:38] [INFO] Database connection established
+[2025-12-11 22:18:38] [INFO] Running migration: 001_create_users.sql
+[2025-12-11 22:18:38] [INFO] Running migration: 003_recurring_payments.sql
+[2025-12-11 22:18:38] [INFO] Bot is now waiting for updates...
+[2025-12-11 22:20:36] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:20:36] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:20:39] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:20:39] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:20:40] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:20:40] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:20:49] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:20:49] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:20:55] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:20:55] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:02] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:02] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:12] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:12] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:17] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:17] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:25] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:25] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:30] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:30] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:33] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:33] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:37] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:37] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:38] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:38] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:40] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:40] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:42] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-11 22:21:42] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:27:09] [INFO] =========== Starting telegram assistant ===========
+[2025-12-12 00:27:09] [INFO] .env loaded successfully
+[2025-12-12 00:27:09] [INFO] Bot authorized as: urban_assist_bot
+[2025-12-12 00:27:09] [INFO] Database connection established
+[2025-12-12 00:27:09] [INFO] Running migration: 001_create_users.sql
+[2025-12-12 00:27:09] [INFO] Running migration: 003_recurring_payments.sql
+[2025-12-12 00:27:09] [WARN] Missing ENV variable: JWT_SECRET
+[2025-12-12 00:27:09] [WARN] JWT_SECRET not set, using default (NOT SECURE FOR PRODUCTION)
+[2025-12-12 00:27:09] [WARN] Missing ENV variable: API_PORT
+[2025-12-12 00:27:09] [INFO] Bot is now waiting for updates...
+[2025-12-12 00:27:09] [INFO] Starting API server on port 8080
+[2025-12-12 00:27:09] [FATAL] API server error: listen tcp :8080: bind: address already in use
+[2025-12-12 00:32:28] [INFO] =========== Starting telegram assistant ===========
+[2025-12-12 00:32:28] [INFO] .env loaded successfully
+[2025-12-12 00:32:28] [INFO] Bot authorized as: urban_assist_bot
+[2025-12-12 00:32:28] [INFO] Database connection established
+[2025-12-12 00:32:28] [INFO] Running migration: 001_create_users.sql
+[2025-12-12 00:32:29] [INFO] Running migration: 003_recurring_payments.sql
+[2025-12-12 00:32:29] [WARN] Missing ENV variable: JWT_SECRET
+[2025-12-12 00:32:29] [WARN] JWT_SECRET not set, using default (NOT SECURE FOR PRODUCTION)
+[2025-12-12 00:32:29] [WARN] Missing ENV variable: API_PORT
+[2025-12-12 00:32:29] [INFO] Bot is now waiting for updates...
+[2025-12-12 00:32:29] [INFO] Starting API server on port 8080
+[2025-12-12 00:32:29] [FATAL] API server error: listen tcp :8080: bind: address already in use
+[2025-12-12 00:35:12] [INFO] =========== Starting telegram assistant ===========
+[2025-12-12 00:35:12] [INFO] .env loaded successfully
+[2025-12-12 00:35:12] [INFO] Bot authorized as: urban_assist_bot
+[2025-12-12 00:35:12] [INFO] Database connection established
+[2025-12-12 00:35:12] [INFO] Running migration: 001_create_users.sql
+[2025-12-12 00:35:12] [INFO] Running migration: 003_recurring_payments.sql
+[2025-12-12 00:35:12] [WARN] Missing ENV variable: JWT_SECRET
+[2025-12-12 00:35:12] [WARN] JWT_SECRET not set, using default (NOT SECURE FOR PRODUCTION)
+[2025-12-12 00:35:12] [WARN] Missing ENV variable: API_PORT
+[2025-12-12 00:35:12] [INFO] Bot is now waiting for updates...
+[2025-12-12 00:35:12] [INFO] Starting API server on port 8080
+[2025-12-12 00:35:31] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:31] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:37] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:37] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:37] [ERROR] TodoRepo.List error: ERROR: column "due_date" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:37] [ERROR] Todo list error: ERROR: column "due_date" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:41] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:41] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:45] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:45] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:47] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:47] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:51] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:35:51] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:07] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:07] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:12] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:12] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:14] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:14] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:17] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:17] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:24] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:24] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:30] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:30] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:37] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:37] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:43] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:43] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:46] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:46] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:54] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:54] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:56] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:36:56] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:37:03] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:37:03] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:37:13] [ERROR] UserRepo.RegisterUser error: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:37:13] [ERROR] Failed to register user: ERROR: column "user_id" of relation "users" does not exist (SQLSTATE 42703)
+[2025-12-12 00:40:31] [INFO] =========== Starting telegram assistant ===========
+[2025-12-12 00:40:31] [INFO] .env loaded successfully
+[2025-12-12 00:40:31] [INFO] Bot authorized as: urban_assist_bot
+[2025-12-12 00:40:31] [INFO] Database connection established
+[2025-12-12 00:40:31] [INFO] Running migration: 001_create_users.sql
+[2025-12-12 00:40:31] [INFO] Running migration: 002_fix_schema.sql
+[2025-12-12 00:40:31] [INFO] Running migration: 003_recurring_payments.sql
+[2025-12-12 00:40:31] [WARN] Missing ENV variable: JWT_SECRET
+[2025-12-12 00:40:31] [WARN] JWT_SECRET not set, using default (NOT SECURE FOR PRODUCTION)
+[2025-12-12 00:40:31] [WARN] Missing ENV variable: API_PORT
+[2025-12-12 00:40:31] [INFO] Bot is now waiting for updates...
+[2025-12-12 00:40:31] [INFO] Starting API server on port 8080
+[2025-12-12 00:40:31] [FATAL] API server error: listen tcp :8080: bind: address already in use
+[2025-12-12 00:41:22] [INFO] =========== Starting telegram assistant ===========
+[2025-12-12 00:41:22] [INFO] .env loaded successfully
+[2025-12-12 00:41:22] [INFO] Bot authorized as: urban_assist_bot
+[2025-12-12 00:41:22] [INFO] Database connection established
+[2025-12-12 00:41:22] [INFO] Running migration: 001_create_users.sql
+[2025-12-12 00:41:22] [INFO] Running migration: 002_fix_schema.sql
+[2025-12-12 00:41:22] [INFO] Running migration: 003_recurring_payments.sql
+[2025-12-12 00:41:22] [WARN] Missing ENV variable: JWT_SECRET
+[2025-12-12 00:41:22] [WARN] JWT_SECRET not set, using default (NOT SECURE FOR PRODUCTION)
+[2025-12-12 00:41:22] [WARN] Missing ENV variable: API_PORT
+[2025-12-12 00:41:22] [INFO] Bot is now waiting for updates...
+[2025-12-12 00:41:22] [INFO] Starting API server on port 8080
+[2025-12-12 00:43:08] [INFO] Received shutdown signal, gracefully stopping...
+[2025-12-12 00:43:08] [INFO] Shutting down bot...
+[2025-12-12 00:50:30] [INFO] =========== Starting telegram assistant ===========
+[2025-12-12 00:50:30] [INFO] .env loaded successfully
+[2025-12-12 00:50:30] [INFO] Checking for previous bot instances...
+[2025-12-12 00:50:31] [INFO] Previous bot instances stopped
+[2025-12-12 00:50:32] [INFO] Bot authorized as: urban_assist_bot
+[2025-12-12 00:50:32] [INFO] Database connection established
+[2025-12-12 00:50:32] [INFO] Running migration: 001_create_users.sql
+[2025-12-12 00:50:32] [INFO] Running migration: 002_fix_schema.sql
+[2025-12-12 00:50:32] [INFO] Running migration: 003_recurring_payments.sql
+[2025-12-12 00:50:32] [INFO] Bot is now waiting for updates...
+[2025-12-12 00:50:32] [INFO] Starting API server on port 8080
+[2025-12-12 01:00:22] [INFO] =========== Starting telegram assistant ===========
+[2025-12-12 01:00:22] [INFO] .env loaded successfully
+[2025-12-12 01:00:22] [INFO] Checking for previous bot instances and zombie processes...
+[2025-12-12 01:00:25] [INFO] Previous bot instances stopped successfully
+[2025-12-12 01:00:27] [INFO] Bot authorized as: urban_assist_bot
+[2025-12-12 01:00:27] [INFO] Waiting 3 seconds before connecting to Telegram API...
+[2025-12-12 01:00:30] [INFO] Updates channel created successfully
+[2025-12-12 01:00:30] [INFO] Database connection established
+[2025-12-12 01:00:30] [INFO] Running migration: 001_create_users.sql
+[2025-12-12 01:00:30] [INFO] Running migration: 002_fix_schema.sql
+[2025-12-12 01:00:30] [INFO] Running migration: 003_recurring_payments.sql
+[2025-12-12 01:00:30] [INFO] Bot is now waiting for updates...
+[2025-12-12 01:00:30] [INFO] Starting API server on port 8080
+[2025-12-12 01:00:47] [ERROR] Todo list error: can't scan into dest[3]: cannot scan NULL into *string
+[2025-12-12 02:41:59] [ERROR] UserRepo.RegisterUser error: failed to connect to `host=localhost user=botuser database=tg_bot`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)
+[2025-12-12 02:41:59] [ERROR] Failed to register user: failed to connect to `host=localhost user=botuser database=tg_bot`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)
+[2025-12-12 02:41:59] [ERROR] TodoRepo.List error: failed to connect to `host=localhost user=botuser database=tg_bot`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)
+[2025-12-12 02:41:59] [ERROR] Todo list error: failed to connect to `host=localhost user=botuser database=tg_bot`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)
+[2025-12-12 02:42:00] [ERROR] UserRepo.RegisterUser error: failed to connect to `host=localhost user=botuser database=tg_bot`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)
+[2025-12-12 02:42:00] [ERROR] Failed to register user: failed to connect to `host=localhost user=botuser database=tg_bot`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)
+[2025-12-12 02:42:21] [ERROR] UserRepo.RegisterUser error: failed to connect to `host=localhost user=botuser database=tg_bot`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)
+[2025-12-12 02:42:21] [ERROR] Failed to register user: failed to connect to `host=localhost user=botuser database=tg_bot`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)
+[2025-12-12 02:42:25] [ERROR] UserRepo.RegisterUser error: failed to connect to `host=localhost user=botuser database=tg_bot`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)
+[2025-12-12 02:42:25] [ERROR] Failed to register user: failed to connect to `host=localhost user=botuser database=tg_bot`: dial error (dial tcp 127.0.0.1:5432: connect: connection refused)

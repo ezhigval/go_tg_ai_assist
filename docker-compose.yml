@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: tg_bot_pg
+    image: postgres:16
+    environment:
+      POSTGRES_DB: tg_bot
+      POSTGRES_USER: botuser
+      POSTGRES_PASSWORD: botpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:
